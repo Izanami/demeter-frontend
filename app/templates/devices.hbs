@@ -1,6 +1,15 @@
 {{outlet}}
 <h1>Liste des appareils</h1>
 <table border="0">
-    <tr><th>Nom</th></tr>
-    <tr><td>Température</td></tr>
+    <tr>
+        <th>Nom</th>
+        <th>Dernière mise à jour</th>
+    </tr>
+
+    {{#each model as |device|}}
+    <tr>
+        <td>{{device.name}}</td>
+        <td>{{device.lastUpdate}}</td>
+    </tr>
+    {{/each}}
 </table>
