@@ -39,7 +39,10 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.host = 'http://192.168.1.13:8080'
+    ENV.contentSecurityPolicy = {
+        'connect-src': "'self' http://192.168.1.13:8080"
+    }
   }
 
   return ENV;
