@@ -39,9 +39,9 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.host = 'http://192.168.1.13:8080'
+    ENV.host = 'http://localhost:3000'
     ENV.contentSecurityPolicy = {
-        'connect-src': "'self' http://192.168.1.13:8080"
+        'connect-src': "'self'" + ENV.host
     }
   }
 
