@@ -39,10 +39,6 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.host = 'http://localhost:3000'
-    ENV.contentSecurityPolicy = {
-        'connect-src': "'self'" + ENV.host
-    }
   }
 
   return ENV;
