@@ -9,19 +9,40 @@ body {
     }
 }
 
+.row div {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
 .menu {
-    background-color: #59AE7F;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    background-color: #eef7f2;
+}
+
+.menu .columns {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .menu a {
-    color: #ffffff;
+    color: #000000;
     text-decoration: none;
     font-weight: bold;
 }
 
-.row {
-    padding-left: 40px;
-    padding-right: 40px;
+.menu .title {
+    background-color: #cce6d7;
+}
+
+
+h2 {
+    color: #ffffff;
+    background-color: #59AE7F;
+    text-align: center;
+    padding: 70px;
+}
+
+.welcome {
+    padding-top: calc(50vh - 48px);
+    padding-bottom: calc(50vh - 48px);
+    margin: 0px;
 }
