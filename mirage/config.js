@@ -24,17 +24,7 @@ export default function() {
     http://www.ember-cli-mirage.com/docs/v0.2.x/shorthands/
   */
 
-    this.get('/sensors', () => {
-        return {
-            data: [
-                {
-                type: 'sensors',
-                id: 1,
-                attributes: {
-                    name: 'Tempếrature',
-                    unit: '°C'
-                }
-                }
-            ]};
+    this.get('/sensors', (schema) => {
+        return schema.sensors.all();
     });
 }
