@@ -1,7 +1,7 @@
 <div class="radials">
 {{#each sensors as |sensor|}}
 <div class="radial">
-    {{graph-radial name=sensor.name value=sensor.last unit=sensor.unit}}
+    {{graph-radial name=sensor.name value=sensor.last unit=sensor.unit minimal=sensor.minimal maximum=sensor.maximum}}
 </div>
 {{/each}}
 </div>

@@ -8,20 +8,8 @@ export default Ember.Component.extend({
         let name = this.get('name');
         let text = this.get('value');
         let unit = this.get('unit');
-
-        /* Defaults variables */
-        if(name === undefined) {
-            name = "";
-        }
-
-        if(text === undefined || text === null) {
-            text = "";
-        }
-
-
-        if(unit === undefined) {
-            unit = "";
-        }
+        let minimum = this.get('minimal')
+        let maximum = this.get('maximum');
 
         /* Calc dimensions */
         let rayon = 80;
@@ -31,13 +19,40 @@ export default Ember.Component.extend({
         let font_size_value = rayon/4;
         let center = rayon + line_size;
         let circumference = 2*3.14*rayon;
+        let pourcent = circumference;
+
+        /* Defaults variables */
+        if(name === undefined) {
+            name = "";
+        }
+
+        if(text === undefined || text === null) {
+            text = "";
+        } else if (maximum !== undefined) {
+            let offset = 0;
+
+            if(minimum !== undefined) {
+                offset = minimum * -1;
+            }
+
+            if(text < minimum) {
+                pourcent = 0;
+            } else {
+                pourcent = (Math.abs(text) / (maximum + offset )) * circumference;
+            }
+
+        }
+
+        if(unit === undefined) {
+            unit = "";
+        }
 
         /* Select canvas balise */
         let graph_selector  = this.$(".graph");
 
         /* Cut strings if too long */
         name = name.substring(0, 10);
-        text = text.toString().substring(0, 10) + " " + unit;
+        text = text.toString().substring(0, 15) + " " + unit.toString().substring(0, 5);
 
         /* Append svg canvas */
         let canvas = d3.selectAll(graph_selector.toArray()).append('svg')
@@ -62,7 +77,7 @@ export default Ember.Component.extend({
             .attr("stroke", "#CCEBC0")
             .attr("stroke-width", line_size)
             .attr("stroke-dasharray", function() {
-                return "350" + "," + circumference;
+                return pourcent + "," + circumference;
             })
             .style("fill", "none");
 
