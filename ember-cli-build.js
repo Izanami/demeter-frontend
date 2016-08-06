@@ -25,5 +25,7 @@ module.exports = function(defaults) {
   app.import('bower_components/skeleton/css/normalize.css');
   app.import('bower_components/skeleton/css/skeleton.css');
 
+  app.import('bower_components/d3/d3.js');
+
   return app.toTree();
 };

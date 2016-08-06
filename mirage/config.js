@@ -26,14 +26,15 @@ export default function() {
 
     this.get('/sensors', () => {
         return {
-            data: [{
+            data: [
+                {
                 type: 'sensors',
                 id: 1,
                 attributes: {
                     name: 'Tempếrature',
-                    value: 30
+                    unit: '°C'
                 }
-            }
+                }
             ]};
     });
 }

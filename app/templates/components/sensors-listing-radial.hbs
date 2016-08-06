@@ -1,0 +1,7 @@
+<div class="radials">
+{{#each sensors as |sensor|}}
+<div class="radial">
+    {{graph-radial name=sensor.name value=sensor.last unit=sensor.unit}}
+</div>
+{{/each}}
+</div>

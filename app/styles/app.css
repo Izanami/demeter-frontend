@@ -9,7 +9,7 @@ body {
     }
 }
 
-.row div {
+.row > div {
     padding-left: 40px;
     padding-right: 40px;
 }
@@ -41,8 +41,28 @@ h2 {
     padding: 70px;
 }
 
+svg {
+  height: auto;
+  max-width: 100%;
+}
+
 .welcome {
     padding-top: calc(50vh - 48px);
     padding-bottom: calc(50vh - 48px);
     margin: 0px;
+}
+
+.graph {
+    max-width: 100%;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+
+.radial {
+    display: inline-block;
+}
+
+.radials {
+    text-align: center;
 }
