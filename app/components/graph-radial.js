@@ -6,9 +6,9 @@ export default Ember.Component.extend({
 
         /* Get pass arguments */
         let name = this.get('name');
-        let text = this.get('value');
+        let value = this.get('value');
         let unit = this.get('unit');
-        let minimum = this.get('minimal')
+        let minimum = this.get('minimum');
         let maximum = this.get('maximum');
 
         /* Calc dimensions */
@@ -26,8 +26,8 @@ export default Ember.Component.extend({
             name = "";
         }
 
-        if(text === undefined || text === null) {
-            text = "";
+        if(value === undefined || value === null) {
+            value = "";
         } else if (maximum !== undefined) {
             let offset = 0;
 
@@ -35,15 +35,15 @@ export default Ember.Component.extend({
                 offset = minimum * -1;
             }
 
-            if(text < minimum) {
+            if(value < minimum) {
                 pourcent = 0;
             } else {
-                pourcent = (Math.abs(text) / (maximum + offset )) * circumference;
+                pourcent = (Math.abs(value) / (maximum + offset )) * circumference;
             }
 
         }
 
-        if(unit === undefined) {
+        if(unit === undefined || unit === null) {
             unit = "";
         }
 
@@ -52,7 +52,7 @@ export default Ember.Component.extend({
 
         /* Cut strings if too long */
         name = name.substring(0, 10);
-        text = text.toString().substring(0, 15) + " " + unit.toString().substring(0, 5);
+        value = value.toString().substring(0, 15) + " " + unit.toString().substring(0, 5);
 
         /* Append svg canvas */
         let canvas = d3.selectAll(graph_selector.toArray()).append('svg')
@@ -97,7 +97,7 @@ export default Ember.Component.extend({
             .attr("x", center)
             .attr("y", center + (rayon/3))
             .attr("alignment-baseline", "central")
-            .text(text);
+            .text(value);
 
     }
 });

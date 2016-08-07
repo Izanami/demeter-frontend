@@ -9,9 +9,22 @@
     <tbody>
         {{#each sensors as |sensor|}}
         <tr>
-            <td>{{sensor.name}}</td>
-            <td>{{sensor.last}}</td>
-            <td>{{sensor.unit}}</td>
+            <td>
+                {{#link-to "sensor" sensor}}
+                {{sensor.name}}
+                {{/link-to}}
+            </td>
+            <td>
+                {{#link-to "sensor" sensor}}
+                {{sensor.last}}
+                {{/link-to}}
+            </td>
+            <td>                
+                {{#link-to "sensor" sensor}}
+                {{sensor.unit}}
+                {{/link-to}}
+            </td>
+
         </tr>
         {{/each}}
 

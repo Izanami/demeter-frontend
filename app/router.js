@@ -7,8 +7,9 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('sensors');
-  this.route('logs');
+    this.route('sensors');
+    this.route('sensor', { path: '/sensor/:sensor_id' });
+    this.route('logs');
 });
 
 export default Router;

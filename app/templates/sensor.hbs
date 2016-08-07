@@ -1,0 +1,30 @@
+<h2>Capteur : {{model.name}}</h2>
+
+<div class="row display">
+</div>
+
+<div class="row sensor">
+    <div class="four columns">
+        {{graph-radial name=model.name value=model.last unit=model.unit minimal=model.minimal maximum=model.maximum}}
+    </div>
+    
+    <div class="eight columns">
+        <ul>
+            <li>
+                {{#if model.minimum}}
+                    Minimum ; {{model.minimum}}
+                {{else}}
+                    Aucune valeur minimum définie
+                {{/if}}
+            </li>
+            <li>
+                {{#if model.maximum}}
+                    Maximum : {{model.maximum}}
+                {{else}}
+                    Aucune valeur maximum définie
+                {{/if}}
+            </li>
+        </ul>
+    </div>
+</div>
+
