@@ -96,8 +96,6 @@ export default Ember.Component.extend({
                 return self.get('dash') + "," + self.get('circumference');
             })
             .style("fill", "none");
-
-        return circle;
     })),
 
     nameSvg: Ember.on('didInsertElement', Ember.observer('canvas', 'center', 'nameText', function() {
