@@ -11,7 +11,16 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{graph-radial}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$('.graph').length, 1);
+
+  let svg_all = this.$('.graph svg');
+  assert.equal(svg_all.length, 1);
+
+  let svg = svg_all.first();
+
+  /* Svg attributes */
+  assert.equal(svg.attr('height') !== undefined, true, 'Has height attr');
+  assert.equal(svg.attr('width') !== undefined, true, 'Has width attr');
 
   // Template block usage:
   this.render(hbs`
@@ -20,5 +29,18 @@ test('it renders', function(assert) {
     {{/graph-radial}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+
+  assert.equal(this.$('.graph').length, 1);
+});
+
+
+test('name', function(assert) {
+    this.set('t', 'Baz');
+
+    this.render(hbs`{{graph-radial name=t}}`);
+    assert.equal($('svg #name').text(), 'Baz');
+
+
+    this.set('t', 'Foo');
+    assert.equal($('svg #name').text(), 'Foo');
 });

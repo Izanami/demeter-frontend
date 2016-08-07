@@ -1,71 +1,87 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-    didInsertElement() {
-        this._super(...arguments);
+    name: '',
+    value: 0,
+    unit: '',
+    rayon: 80,
+    lineSize: 15,
 
-        /* Get pass arguments */
-        let name = this.get('name');
-        let value = this.get('value');
-        let unit = this.get('unit');
-        let minimum = this.get('minimum');
-        let maximum = this.get('maximum');
+    nameFontSize: Ember.computed('rayon', function() {
+        return this.get('rayon')/3;
+    }),
 
-        /* Calc dimensions */
-        let rayon = 80;
-        let line_size = 15;
+    valueFontSize: Ember.computed('rayon', function() {
+        return this.get('rayon')/4;
+    }),
 
-        let font_size_name = rayon/3;
-        let font_size_value = rayon/4;
-        let center = rayon + line_size;
-        let circumference = 2*3.14*rayon;
-        let pourcent = circumference;
+    circumference: Ember.computed('rayon', function() {
+        return 2 * 3.14 * this.get('rayon');
+    }),
 
-        /* Defaults variables */
-        if(name === undefined) {
-            name = "";
+    center: Ember.computed('rayon', 'lineSize', function() {
+        return this.get('rayon') + this.get('lineSize');
+    }),
+
+    offset: Ember.computed('minimum', function() {
+        if(this.get('minimum') !== undefined) {
+            return this.get('minimum') * -1;
+        } else {
+            return 0;
+        }
+    }),
+
+    dash: Ember.computed('value', 'maximum', 'circumference', 'offset', function() {
+        if(this.get('maximum') === undefined) {
+            return this.get('circumference');
         }
 
-        if(value === undefined || value === null) {
-            value = "";
-        } else if (maximum !== undefined) {
-            let offset = 0;
+        let maximum_dash = this.get('maximum') + this.get('offset');
+        let ratio = Math.abs(this.get('value')) / maximum_dash;
 
-            if(minimum !== undefined) {
-                offset = minimum * -1;
-            }
+        return ratio * this.get('circumference');
+    }),
 
-            if(value < minimum) {
-                pourcent = 0;
-            } else {
-                pourcent = (Math.abs(value) / (maximum + offset )) * circumference;
-            }
+    selector: Ember.computed(function() {
+        return this.$(".graph");
+    }),
 
-        }
+    nameText: Ember.computed('name', function() {
+        return this.get('name').substring(0, 10);
+    }),
 
-        if(unit === undefined || unit === null) {
-            unit = "";
-        }
+    valueText: Ember.computed('value', function() {
+        return this.get('value').toString().substring(0, 15);
+    }),
 
-        /* Select canvas balise */
-        let graph_selector  = this.$(".graph");
+    unitText: Ember.computed('unit', function() {
+        return this.get('unit').toString().substring(0, 5);
+    }),
 
-        /* Cut strings if too long */
-        name = name.substring(0, 10);
-        value = value.toString().substring(0, 15) + " " + unit.toString().substring(0, 5);
+    fullText: Ember.computed('valueText', 'unitText', function() {
+        return this.get('valueText') + " " + this.get('unitText');
+    }),
 
-        /* Append svg canvas */
-        let canvas = d3.selectAll(graph_selector.toArray()).append('svg')
+    canvas: Ember.computed('selector', function() {
+        let center = this.get('center');
+        return d3.selectAll(this.get('selector').toArray()).append('svg')
             .attr("role", "img")
             .attr("viewBox", "0 0 "+ center*2 + " " + center*2)
             .attr("width", center*2)
             .attr("height", center*2);
+    }),
 
-        /* Draw circle */
-        let circle = canvas.selectAll("circle")
-            .data([25])
-            .enter()
-            .append("circle");
+    circleSvg: Ember.on('didInsertElement', Ember.observer('canvas', 'center', 'lineSize', 'dash', function() {
+        let self = this;
+        let canvas = this.get('canvas');
+        let center = this.get('center');
+
+        if(this.get('circleDOM') !== undefined) {
+            this.get('circleDOM').remove();
+        }
+
+        let circle = canvas.append("circle");
+        this.set('circleDOM', circle);
 
         circle
             .attr("transform", function() {
@@ -73,31 +89,57 @@ export default Ember.Component.extend({
             })
             .attr("cx", center)
             .attr("cy", center)
-            .attr("r", rayon)
+            .attr("r", this.get('rayon'))
             .attr("stroke", "#CCEBC0")
-            .attr("stroke-width", line_size)
+            .attr("stroke-width", this.get('lineSize'))
             .attr("stroke-dasharray", function() {
-                return pourcent + "," + circumference;
+                return self.get('dash') + "," + self.get('circumference');
             })
             .style("fill", "none");
 
-        /* Draw text : value and unit */
-        canvas.append("text")
+        return circle;
+    })),
+
+    nameSvg: Ember.on('didInsertElement', Ember.observer('canvas', 'center', 'nameText', function() {
+        let canvas = this.get('canvas');
+        let center = this.get('center');
+
+        if(this.get('nameDOM') !== undefined) {
+            this.get('nameDOM').remove();
+        }
+
+        let name = canvas.append("text");
+        this.set('nameDOM', name);
+
+        name
+            .attr('id', 'name')
             .attr("text-anchor", "middle")
-            .attr("font-size", font_size_name)
+            .attr("font-size", this.get('nameFontSize'))
             .attr("x", center)
             .attr("y", center)
             .attr("alignment-baseline", "central")
-            .text(name);
+            .text(this.get('nameText'));
 
+    })),
 
-        canvas.append("text")
+    valueSvg: Ember.on('didInsertElement', Ember.observer('canvas', 'center', 'fullText', function() {
+        let canvas = this.get('canvas');
+        let center = this.get('center');
+
+        if(this.get('valueDOM') !== undefined) {
+            this.get('valueDOM').remove();
+        }
+
+        let value = canvas.append("text");
+        this.set('valueDOM', value);
+
+        value
+            .attr('id', 'value')
             .attr("text-anchor", "middle")
-            .attr("font-size", font_size_value)
+            .attr("font-size", this.get('valueFontSize'))
             .attr("x", center)
-            .attr("y", center + (rayon/3))
+            .attr("y", center + (this.get('rayon')/3))
             .attr("alignment-baseline", "central")
-            .text(value);
-
-    }
+            .text(this.get('fullText'));
+    })),
 });
