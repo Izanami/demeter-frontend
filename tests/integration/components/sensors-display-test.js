@@ -11,7 +11,8 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{sensors-display}}`);
 
-  assert.equal(true, true);
+  assert.equal(this.$('div').length, 3);
+  assert.equal(this.$('div a').length, 2);
 
   // Template block usage:
   this.render(hbs`
@@ -19,6 +20,4 @@ test('it renders', function(assert) {
       template block text
     {{/sensors-display}}
   `);
-
-  //assert.equal(this.$().text().trim(), 'template block text');
 });

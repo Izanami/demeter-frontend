@@ -35,12 +35,23 @@ test('it renders', function(assert) {
 
 
 test('name', function(assert) {
-    this.set('t', 'Baz');
+    this.set('name', 'Baz');
 
-    this.render(hbs`{{graph-radial name=t}}`);
+    this.render(hbs`{{graph-radial name=name}}`);
     assert.equal($('svg #name').text(), 'Baz');
 
+    this.set('name', 'Fooooooooooooooooooo');
+    assert.equal($('svg #name').text(), 'Fooooooooo');
+});
 
-    this.set('t', 'Foo');
-    assert.equal($('svg #name').text(), 'Foo');
+test('value', function(assert) {
+    this.set('value', 10);
+    this.set('unit', 'Foo');
+
+    this.render(hbs`{{graph-radial value=value unit=unit}}`);
+    assert.equal($('svg #value').text(), '10 Foo');
+
+    this.set('value', 20);
+    this.set('unit', 'Foooooooooooooooooooo');
+    assert.equal($('svg #value').text(), '20 Foooo');
 });

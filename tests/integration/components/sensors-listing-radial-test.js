@@ -9,9 +9,13 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{sensors-listing-radial}}`);
+  this.set('sensors', [{}]);
+  this.render(hbs`{{sensors-listing-radial sensors=sensors}}`);
 
-  assert.equal(true, true);
+  assert.equal(this.$('.radial').length, 1);
+
+  this.set('sensors', [{name: 'Foo'}, {name: 'Baz'}]);
+  assert.equal(this.$('.radial').length, 2);
 
   // Template block usage:
   this.render(hbs`

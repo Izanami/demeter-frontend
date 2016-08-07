@@ -9,9 +9,10 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{sensors-listing}}`);
+  this.set('sensors', [{}]);
+  this.render(hbs`{{sensors-listing sensors=sensors}}`);
 
-  assert.equal(true, true);
+  assert.equal(this.$('tbody tr').length, 1);
 
   // Template block usage:
   this.render(hbs`

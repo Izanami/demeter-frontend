@@ -47,15 +47,27 @@ export default Ember.Component.extend({
     }),
 
     nameText: Ember.computed('name', function() {
-        return this.get('name').substring(0, 10);
+        if(this.get('name') !== undefined) {
+            return this.get('name').substring(0, 10);
+        } else {
+            return '';
+        }
     }),
 
     valueText: Ember.computed('value', function() {
-        return this.get('value').toString().substring(0, 15);
+        if(this.get('value') !== undefined) {
+            return this.get('value').toString().substring(0, 15);
+        } else {
+            return '';
+        }
     }),
 
     unitText: Ember.computed('unit', function() {
-        return this.get('unit').toString().substring(0, 5);
+        if(this.get('unit') !== undefined) {
+            return this.get('unit').toString().substring(0, 5);
+        } else {
+            return '';
+        }
     }),
 
     fullText: Ember.computed('valueText', 'unitText', function() {
