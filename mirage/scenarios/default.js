@@ -9,5 +9,10 @@ export default function(server) {
 
   // server.createList('post', 10);
 
-  server.createList('sensor', 20);
+  let log = server.createList('log');
+  server.createList('sensor', 20, {log});
+
+
+  let sensor = server.createList('sensor');
+  server.createList('log', 10);
 }

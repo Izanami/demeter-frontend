@@ -1,0 +1,23 @@
+<div>
+    <table class="u-full-width">
+        <thead>
+            <tr>
+                <th>Nom de la sonde</th>
+                <th>Valeur  </th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each model as |log|}}
+            <tr>
+                <td>
+                    {{log.sensor.name}}
+                </td>
+                <td>                
+                    {{log.value}}
+                </td>
+            </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+</div>

@@ -47,7 +47,7 @@ export default Ember.Component.extend({
     }),
 
     nameText: Ember.computed('name', function() {
-        if(this.get('name') !== undefined) {
+        if(this.get('name') !== undefined && this.get('name') !== "") {
             return this.get('name').substring(0, 10);
         } else {
             return '';
@@ -55,7 +55,7 @@ export default Ember.Component.extend({
     }),
 
     valueText: Ember.computed('value', function() {
-        if(this.get('value') !== undefined) {
+        if(this.get('value') !== undefined && this.get('value') !== "") {
             return this.get('value').toString().substring(0, 15);
         } else {
             return '';
@@ -63,7 +63,7 @@ export default Ember.Component.extend({
     }),
 
     unitText: Ember.computed('unit', function() {
-        if(this.get('unit') !== undefined) {
+        if(this.get('unit') !== undefined && this.get('unit') !== null) {
             return this.get('unit').toString().substring(0, 5);
         } else {
             return '';

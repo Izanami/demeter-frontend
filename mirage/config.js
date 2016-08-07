@@ -28,10 +28,12 @@ export default function() {
         return schema.sensors.all();
     });
 
+    this.get('/logs', (schema) => {
+        return schema.logs.all();
+    });
 
 	this.get('/sensors/:id', (schema, request) => {
 		var id = request.params.id;
-
 		return schema.sensors.find(id);
 	});
 
