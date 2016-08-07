@@ -27,4 +27,12 @@ export default function() {
     this.get('/sensors', (schema) => {
         return schema.sensors.all();
     });
+
+
+	this.get('/sensors/:id', (schema, request) => {
+		var id = request.params.id;
+
+		return schema.sensors.find(id);
+	});
+
 }
