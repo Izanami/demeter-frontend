@@ -4,7 +4,8 @@
     "document",
     "window",
     "-Promise",
-    "d3"
+    "d3",
+    "moment"
   ],
   "browser": true,
   "boss": true,

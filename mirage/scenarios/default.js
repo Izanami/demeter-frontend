@@ -14,5 +14,5 @@ export default function(server) {
 
 
   let sensor = server.createList('sensor');
-  server.createList('log', 10);
+  server.createList('log', 10, { sensor });
 }

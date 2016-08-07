@@ -2,18 +2,28 @@
     <table class="u-full-width">
         <thead>
             <tr>
-                <th>Nom de la sonde</th>
-                <th>Valeur  </th>
+                {{#if showName}}
+                    <th>Nom de la sonde</th>
+                {{/if}}
+                <th>Valeur</th>
+                <th>Date</th>
             </tr>
         </thead>
         <tbody>
             {{#each model as |log|}}
             <tr>
+                {{#if showName}}
                 <td>
                     {{log.sensor.name}}
                 </td>
+                {{/if}}
+
                 <td>                
                     {{log.value}}
+                </td>
+
+                <td>
+                    {{date-format log.updatedAt}}
                 </td>
             </tr>
             {{/each}}
