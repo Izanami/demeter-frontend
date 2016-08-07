@@ -1,14 +1,4 @@
 <h2>Liste des capteurs</h2>
 
-<div class="row display">
-    <div class="two columns" {{action "showTable"}}><a>Tableau</a></div>
-    <div class="two columns" {{action "showGraph"}}><a>Graphique</a></div>
-</div>
-
-{{#if displayGraph}}
-{{sensors-listing-radial sensors=model}}
-{{/if}}
-
-{{#if displayTable}}
-{{sensors-listing sensors=model}}
-{{/if}}
+{{sensors-display}}
+{{outlet}}

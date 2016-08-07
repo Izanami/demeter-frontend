@@ -7,7 +7,10 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-    this.route('sensors');
+    this.route('sensors', function() {
+      this.route('radial');
+      this.route('table');
+    });
     this.route('sensor', { path: '/sensor/:sensor_id' });
     this.route('logs');
 });
